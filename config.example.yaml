@@ -1,0 +1,34 @@
+# cc-exec-guard 示例配置：改完重启 cc-exec-guard 生效
+service:
+  host: "127.0.0.1"
+  port: 3777
+
+# Laya 只是默认 backend，换模型只改这里 + 新增 backends/xxx.py
+backend:
+  primary: "laya"          # rules 永远先行，primary 负责语义判断
+  model_id: "convaiinnovations/laya"  # HF repo；无 HF 网络时不会自动下载
+  checkpoint: ""           # 本地权重目录（make model-download 默认 .models/laya），优先于 model_id
+  device: "auto"           # auto | cpu | cuda
+  mode: "auto"             # auto（有本地权重就用，没有就降级）| stub（永远启发式）| real（强制真实，失败抛异常）
+  # 环境变量 CC_EXEC_GUARD_MODEL_ID / CC_EXEC_GUARD_LAYA_DIR / CC_EXEC_GUARD_DEVICE / CC_EXEC_GUARD_LAYA_MODE
+  # 可覆盖以上各项；HF 镜像站用户另设 HF_ENDPOINT
+
+thresholds:
+  deny: 0.75    # P(dangerous) 超过此值 -> deny
+  allow: 0.85   # P(safe) 超过此值且 P(dangerous)<0.1 -> allow，其余 ask
+
+policy:
+  default: "ask"            # 未知/异常一律转人工，fail-closed
+  preview_limit: 1000       # audit 存的命令预览长度上限
+
+logging:
+  log_dir: "~/.cc-exec-guard/logs"
+  app_level: "INFO"         # DEBUG 调阈值时用
+  # app.log：按天滚动，保留 14 天，自动 gzip
+  app_when: "midnight"
+  app_interval: 1
+  app_backup_count: 14
+  # audit.jsonl：按大小滚动，20MB x 10 ≈ 200MB，可审计约数百万条
+  audit_max_bytes: 20971520
+  audit_backup_count: 10
+  to_stdout: true           # 给 systemd-journald 看

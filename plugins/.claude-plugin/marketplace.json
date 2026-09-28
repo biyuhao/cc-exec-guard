@@ -1,0 +1,1 @@
+{"description": "cc-exec-guard marketplace: Bash 执行门控插件（接管 Claude Code Auto 模式放行/拦截）","name": "cc-exec-guard","owner": {"name": "cc-exec-guard"},"plugins": [{"description": "cc-exec-guard: Bash 执行门控，接管 Auto 模式高频放行/拦截，后端模型可插拔","name": "cc-exec-guard","source": "./claude","version": "0.1.0"}]}

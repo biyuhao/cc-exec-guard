@@ -1,0 +1,16 @@
+__pycache__/
+.tmp-logs/
+.tmp-logs-test/
+.tmp-logs-real/
+.venv/
+.uv-cache/
+.pytest_cache/
+.ruff_cache/
+*.pyc
+.models/
+.ms-cache/
+.ms-home/
+dist/
+*.egg-info/
+.DS_Store
+.coverage

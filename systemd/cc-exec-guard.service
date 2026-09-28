@@ -1,0 +1,17 @@
+[Unit]
+Description=cc-exec-guard (Bash gate, shared on this host)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/project/dsh-workspace/cc-exec-guard
+ExecStart=%h/project/dsh-workspace/cc-exec-guard/.venv/bin/uvicorn cc_exec_guard.server:app --host 127.0.0.1 --port 3777
+Restart=on-failure
+RestartSec=2
+Environment=CC_EXEC_GUARD_CONFIG=%h/.cc-exec-guard/config.yaml
+# 日志双写：stdout 进 journald，文件进 ~/.cc-exec-guard/logs
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

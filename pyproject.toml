@@ -1,0 +1,41 @@
+[project]
+name = "cc-exec-guard"
+version = "0.1.0"
+description = "Bash 执行门控：接管 Claude Code Auto 模式高频放行/拦截，后端模型可插拔（默认 Laya）"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn>=0.30",
+  "pydantic>=2",
+  "pyyaml>=6",
+  "torch>=2.3",
+  "transformers>=4.44",
+  "laya>=0.3.9",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8",
+  "httpx>=0.27",
+  "ruff>=0.6",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["cc_exec_guard"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+exclude = [".venv", ".uv-cache", ".pytest_cache", ".ruff_cache", "__pycache__"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.uv]
+package = true

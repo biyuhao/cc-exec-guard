@@ -1,0 +1,1 @@
+{"author": {"name": "cc-exec-guard"},"description": "cc-exec-guard: Bash 执行门控，接管 Auto 模式高频放行/拦截，后端模型可插拔","name": "cc-exec-guard","version": "0.1.0"}
